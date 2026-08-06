@@ -118,6 +118,27 @@
     }
 }
 
+.demo-video {
+    display: grid;
+    gap: 1rem;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    background: rgba(22, 27, 34, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    h2 {
+        margin-top: 0.5rem;
+        font-size: clamp(1.7rem, 4vw, 2.3rem);
+    }
+}
+
+.demo-video__player {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 1rem;
+    background: #000;
+}
+
 .how-it-works {
     display: flex;
     flex-direction: column;

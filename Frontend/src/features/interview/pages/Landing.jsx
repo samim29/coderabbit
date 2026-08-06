@@ -41,6 +41,17 @@ const Landing = () => {
 
             <CallToAction onPrimaryClick={handlePrimary} />
 
+            <section className='demo-video' aria-labelledby='demo-video-title'>
+                <div>
+                    <p className='eyebrow'>See it in action</p>
+                    <h2 id='demo-video-title'>Watch CodeRabbit prepare an interview</h2>
+                </div>
+                <video className='demo-video__player' controls preload='metadata'>
+                    <source src='/media/coderabbit-interview%20ai.mp4' type='video/mp4' />
+                    Your browser does not support embedded videos.
+                </video>
+            </section>
+
             <section className='how-it-works'>
                 <h2>How it works</h2>
                 <div className='steps'>
