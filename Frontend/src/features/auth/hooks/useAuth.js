@@ -16,6 +16,9 @@ export const useAuth = () => {
         setLoading(true)
         try {
             const data = await login({ email, password })
+            if (!data?.user) {
+                throw new Error("Login succeeded but no user details were returned.")
+            }
             setUser(data.user)
             return true
         } catch (err) {
@@ -30,6 +33,9 @@ export const useAuth = () => {
         setLoading(true)
         try {
             const data = await register({ username, email, password })
+            if (!data?.user) {
+                throw new Error("Registration succeeded but no user details were returned.")
+            }
             setUser(data.user)
             return true
         } catch (err) {
@@ -58,7 +64,9 @@ export const useAuth = () => {
             try {
 
                 const data = await getMe()
-                setUser(data.user)
+                if (data?.user) {
+                    setUser(data.user)
+                }
             } catch (err) { } finally {
                 setLoading(false)
             }
