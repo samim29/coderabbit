@@ -3,6 +3,11 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 const NotificationContext = createContext(null)
 
 function getErrorMessage(error) {
+    if (error?.code === "ERR_NETWORK") {
+        const apiUrl = error.config?.baseURL || "the configured API"
+        return `Cannot reach ${apiUrl}. Check the API URL, HTTPS, and CORS configuration.`
+    }
+
     return error?.response?.data?.message
         || error?.response?.data?.error?.message
         || error?.message

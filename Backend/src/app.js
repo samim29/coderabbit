@@ -22,6 +22,10 @@ app.use(cors({
     credentials: true
 }))
 
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "ok" })
+})
+
 /* require all the routes here */
 const authRouter = require("./routes/auth.routes")
 const interviewRouter = require("./routes/interview.routes")
@@ -30,6 +34,21 @@ const interviewRouter = require("./routes/interview.routes")
 /* using all the routes here */
 app.use("/api/auth", authRouter)
 app.use("/api/interview", interviewRouter)
+
+app.use((err, req, res, next) => {
+    console.error("Request failed", {
+        method: req.method,
+        path: req.originalUrl,
+        origin: req.get("origin"),
+        message: err.message
+    })
+
+    if (err.message === "Origin not allowed by CORS") {
+        return res.status(403).json({ message: "This frontend origin is not allowed to call the API." })
+    }
+
+    return res.status(500).json({ message: "Internal server error" })
+})
 
 
 
