@@ -2,9 +2,23 @@ const { GoogleGenAI } = require("@google/genai")
 const { z } = require("zod")
 const { zodToJsonSchema } = require("zod-to-json-schema")
 
-const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY
-})
+let ai
+
+function getAiClient() {
+    if (ai) {
+        return ai
+    }
+
+    if (!process.env.GOOGLE_GENAI_API_KEY) {
+        throw new Error("GOOGLE_GENAI_API_KEY is not configured")
+    }
+
+    ai = new GoogleGenAI({
+        apiKey: process.env.GOOGLE_GENAI_API_KEY
+    })
+
+    return ai
+}
 
 // Use a stable model by default. The former preview model is more prone to
 // temporary capacity errors such as the 503 currently being returned.
@@ -19,10 +33,11 @@ function isTemporaryAiError(error) {
 
 async function generateContentWithRetry(request, maxAttempts = 3) {
     let lastError
+    const client = getAiClient()
 
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
         try {
-            return await ai.models.generateContent(request)
+            return await client.models.generateContent(request)
         } catch (error) {
             lastError = error
 

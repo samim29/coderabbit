@@ -6,14 +6,28 @@ const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+function normalizeOrigin(value) {
+    if (!value) {
+        return null
+    }
+
+    try {
+        return new URL(value).origin
+    } catch {
+        return value.trim().replace(/\/+$/, "")
+    }
+}
+
+const allowedOrigins = (process.env.FRONTEND_URLS || process.env.FRONTEND_URL || "http://localhost:5173")
     .split(",")
-    .map((origin) => origin.trim())
+    .map((origin) => normalizeOrigin(origin))
     .filter(Boolean)
 
 app.use(cors({
     origin(origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
+        const requestOrigin = normalizeOrigin(origin)
+
+        if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
             return callback(null, true)
         }
 

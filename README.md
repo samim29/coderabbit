@@ -129,7 +129,7 @@ npm run preview # Preview the production build
 ## Notes
 
 - The frontend is currently configured to call the API at `http://localhost:3000`, and the backend allows requests from `http://localhost:5173`.
-- For production, set `VITE_API_URL` on the frontend to the public **HTTPS** backend URL, then rebuild and redeploy the frontend. Set `FRONTEND_URL` on the backend to the exact deployed frontend origin (for example, `https://your-site.netlify.app`) and redeploy the backend. Multiple origins can be comma-separated.
+- For production, set `VITE_API_URL` on the frontend to the public **HTTPS** backend URL, then rebuild and redeploy the frontend. Make sure this points to the API deployment, not the frontend site. Set `FRONTEND_URL` on the backend to the exact deployed frontend origin(s) such as `https://your-site.netlify.app` or `https://your-site.vercel.app`, then redeploy the backend. Multiple origins can be comma-separated.
 - Check `https://your-backend-domain/health` after deploying. It must return `{ "status": "ok" }`. If it does not, the frontend will show a network error because the API is unavailable.
 - To investigate production failures, open browser DevTools → Network, retry login, and inspect the failed `POST /api/auth/login` request. A missing status usually means DNS, HTTPS, or CORS; a `4xx`/`5xx` response means the API was reached. Backend logs now record the request path, origin, and error message without logging credentials.
 - Keep `Backend/.env` private. Never commit API keys, database credentials, or JWT secrets.
