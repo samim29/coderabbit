@@ -1,6 +1,6 @@
-# Interview AI
+# Code Rabbit - Interview AI
 
-Interview AI is a full-stack interview-preparation app that turns a target job description and a candidate profile into a personalized interview report. Users can upload a PDF resume or provide a short self-description, then receive an AI-generated match score, question bank, skill-gap analysis, and day-by-day preparation plan.
+Code Rabbit - Interview AI is a full-stack interview-preparation app that turns a target job description and a candidate profile into a personalized interview report. Users can upload a PDF resume or provide a short self-description, then receive an AI-generated match score, question bank, skill-gap analysis, and day-by-day preparation plan.
 
 ## Features
 
